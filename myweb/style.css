@@ -1734,6 +1734,157 @@ main {
         border-top: 0;
     }
 
+    .spade-hero {
+        display: flex;
+        min-height: auto;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 24px;
+        padding: 104px 20px 48px;
+        overflow: hidden;
+    }
+
+    .spade-hero::before {
+        background-size: 48px 48px;
+        mask-image: linear-gradient(180deg, black, transparent 82%);
+    }
+
+    .spade-video-panel {
+        inset: 0;
+        z-index: 0;
+        width: 100%;
+        height: min(48svh, 390px);
+        opacity: 0.38;
+    }
+
+    .spade-video {
+        object-position: center top;
+        transform: none;
+        transition: none;
+    }
+
+    .spade-video-wash {
+        background:
+            linear-gradient(180deg, rgba(247, 248, 244, 0.12) 0%, var(--paper) 82%),
+            linear-gradient(90deg, var(--paper) 0%, rgba(247, 248, 244, 0.28) 54%, var(--paper) 100%);
+        transition: none;
+    }
+
+    .spade-hero-content {
+        width: 100%;
+        max-width: none;
+    }
+
+    .spade-kicker {
+        max-width: 100%;
+        flex-wrap: wrap;
+        gap: 6px 9px;
+        margin-bottom: 14px;
+        font-size: 0.72rem;
+        line-height: 1.35;
+        letter-spacing: 0.06em;
+    }
+
+    .spade-hero h1 {
+        min-height: auto;
+        margin-bottom: 16px;
+        font-size: clamp(2.46rem, 12vw, 4rem);
+        line-height: 0.98;
+        overflow-wrap: anywhere;
+    }
+
+    .type-cursor {
+        width: 2px;
+    }
+
+    .spade-lede {
+        margin-bottom: 22px;
+        font-size: 1rem;
+        line-height: 1.68;
+    }
+
+    .service-picker {
+        width: 100%;
+        margin-bottom: 20px;
+        padding: 16px;
+        border: 1px solid rgba(28, 46, 30, 0.1);
+        border-radius: 22px;
+        background: rgba(250, 251, 249, 0.74);
+        box-shadow: 0 18px 54px rgba(28, 46, 30, 0.08);
+        backdrop-filter: blur(14px);
+    }
+
+    .service-picker h2 {
+        margin-bottom: 2px;
+        font-size: 1.32rem;
+    }
+
+    .service-picker p {
+        margin-bottom: 14px;
+        font-size: 0.92rem;
+    }
+
+    .service-pills {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+    }
+
+    .service-pill {
+        justify-content: center;
+        min-width: 0;
+        min-height: 44px;
+        padding: 0 12px;
+        text-align: center;
+        line-height: 1.15;
+    }
+
+    .service-status {
+        min-height: 0;
+        padding: 12px 14px;
+        font-size: 0.82rem;
+        line-height: 1.45;
+    }
+
+    .service-status.is-active {
+        display: grid;
+        align-items: start;
+        gap: 8px;
+    }
+
+    .spade-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .spade-link {
+        justify-content: center;
+        width: 100%;
+        min-height: 48px;
+        padding: 0 16px;
+        text-align: center;
+    }
+
+    .spade-portrait {
+        width: min(100%, 420px);
+        align-self: center;
+        border-radius: 24px;
+        box-shadow: 0 22px 70px rgba(28, 46, 30, 0.16);
+    }
+
+    .spade-portrait img {
+        aspect-ratio: 4 / 4.7;
+    }
+
+    .spade-portrait figcaption {
+        flex-wrap: wrap;
+        padding: 13px 14px;
+        font-size: 0.68rem;
+        line-height: 1.35;
+        letter-spacing: 0.06em;
+    }
+
     .cinema-hero {
         min-height: 92svh;
         padding: 118px 20px 52px;
@@ -1828,12 +1979,74 @@ main {
 }
 
 @media (max-width: 460px) {
+    .studio-header {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+    }
+
     .studio-brand {
         padding-inline: 14px;
     }
 
     .studio-brand strong {
         font-size: 0.95rem;
+    }
+
+    .nav-toggle {
+        width: 54px;
+    }
+
+    .studio-nav {
+        top: 70px;
+        right: 10px;
+        left: 10px;
+    }
+
+    .spade-hero {
+        padding: 92px 16px 42px;
+        gap: 22px;
+    }
+
+    .spade-video-panel {
+        height: 300px;
+        opacity: 0.28;
+    }
+
+    .spade-kicker {
+        margin-bottom: 14px;
+        font-size: 0.68rem;
+    }
+
+    .spade-hero h1 {
+        font-size: clamp(2.24rem, 11.6vw, 3rem);
+    }
+
+    .spade-lede {
+        font-size: 0.96rem;
+    }
+
+    .service-picker {
+        padding: 14px;
+        border-radius: 20px;
+    }
+
+    .service-pills {
+        grid-template-columns: 1fr;
+    }
+
+    .service-pill {
+        min-height: 44px;
+    }
+
+    .spade-portrait {
+        border-radius: 22px;
+    }
+
+    .spade-portrait figcaption {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 8px;
     }
 
     .glass-button,
