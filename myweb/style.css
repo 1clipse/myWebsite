@@ -1753,9 +1753,10 @@ main {
         position: relative;
         inset: auto;
         z-index: 2;
-        order: 4;
+        order: 3;
         width: 100%;
-        height: clamp(260px, 68vw, 360px);
+        height: clamp(220px, 58vw, 320px);
+        margin: 2px 0 4px;
         overflow: hidden;
         border: 1px solid rgba(28, 46, 30, 0.12);
         border-radius: 26px;
@@ -1766,8 +1767,8 @@ main {
 
     .spade-video {
         object-position: center 22%;
-        transform: none;
-        transition: none;
+        transform: translate3d(0, 0, 0) scale(1.015);
+        transition: transform 160ms var(--ease);
     }
 
     .spade-video-wash {
@@ -1813,7 +1814,7 @@ main {
     .spade-lede {
         position: relative;
         z-index: 3;
-        order: 3;
+        order: 4;
         margin-bottom: 22px;
         font-size: 1rem;
         line-height: 1.68;
@@ -1923,24 +1924,25 @@ main {
         width: 100%;
         height: 100%;
         object-position: center;
-        opacity: 0.92;
+        opacity: 1;
+        filter: saturate(1.12) contrast(1.05) brightness(0.9);
     }
 
     .capabilities-section .edge-shade {
         z-index: 1;
         background:
-            linear-gradient(180deg, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.74) 46%, #040404 100%),
-            linear-gradient(90deg, rgba(0, 0, 0, 0.72), transparent 48%, rgba(0, 0, 0, 0.58));
+            linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.34) 34%, rgba(0, 0, 0, 0.76) 74%, #040404 100%),
+            linear-gradient(90deg, rgba(0, 0, 0, 0.66), transparent 54%, rgba(0, 0, 0, 0.42));
     }
 
     .capabilities-section .section-inner {
         min-height: auto;
-        padding: 104px 20px 44px;
+        padding: 92px 20px 44px;
         margin-top: 0;
     }
 
     .cinematic-heading {
-        margin-bottom: 26px;
+        margin-bottom: min(46vw, 170px);
     }
 
     .cinematic-heading h2 {
@@ -1950,8 +1952,8 @@ main {
     }
 
     .capabilities-section .capability-grid .liquid-card {
-        min-height: 330px;
-        background: rgba(8, 8, 8, 0.56);
+        min-height: 300px;
+        background: rgba(8, 8, 8, 0.62);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
     }
@@ -2086,7 +2088,7 @@ main {
     }
 
     .spade-video-panel {
-        height: clamp(250px, 76vw, 330px);
+        height: clamp(210px, 62vw, 285px);
         border-radius: 22px;
     }
 
@@ -2104,7 +2106,7 @@ main {
     }
 
     .capabilities-section .section-inner {
-        padding: 92px 16px 38px;
+        padding: 86px 16px 38px;
     }
 
     .cinematic-heading h2 {

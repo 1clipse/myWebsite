@@ -349,11 +349,24 @@ function initPage() {
         const playMobile = async () => {
             if (isDesktop()) return;
             video.autoplay = true;
+            video.loop = true;
+            video.muted = true;
+            video.playsInline = true;
             try {
                 await video.play();
             } catch {
                 // Poster remains visible when autoplay is blocked.
             }
+        };
+
+        const syncMode = () => {
+            if (isDesktop()) {
+                video.loop = false;
+                video.pause();
+                return;
+            }
+
+            playMobile();
         };
 
         const handleMouseMove = (event) => {
@@ -395,6 +408,8 @@ function initPage() {
             targetTime = Math.min(video.duration || 0, (video.duration || 0) * 0.22);
             smoothTime = targetTime;
             if (isDesktop()) {
+                video.loop = false;
+                video.pause();
                 video.currentTime = targetTime;
             } else {
                 playMobile();
@@ -406,10 +421,13 @@ function initPage() {
         });
 
         window.addEventListener("mousemove", handleMouseMove, { passive: true });
-        window.addEventListener("resize", playMobile);
+        window.addEventListener("resize", syncMode);
+        document.addEventListener("visibilitychange", () => {
+            if (!document.hidden) syncMode();
+        });
         window.addEventListener("pagehide", () => window.cancelAnimationFrame(rafId), { once: true });
         rafId = window.requestAnimationFrame(tick);
-        playMobile();
+        syncMode();
     }
 
     navToggle?.addEventListener("click", () => {
