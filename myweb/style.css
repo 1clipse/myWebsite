@@ -1739,7 +1739,7 @@ main {
         min-height: auto;
         flex-direction: column;
         align-items: stretch;
-        gap: 24px;
+        gap: 20px;
         padding: 104px 20px 48px;
         overflow: hidden;
     }
@@ -1750,32 +1750,42 @@ main {
     }
 
     .spade-video-panel {
-        inset: 0;
-        z-index: 0;
+        position: relative;
+        inset: auto;
+        z-index: 2;
+        order: 4;
         width: 100%;
-        height: min(48svh, 390px);
-        opacity: 0.38;
+        height: clamp(260px, 68vw, 360px);
+        overflow: hidden;
+        border: 1px solid rgba(28, 46, 30, 0.12);
+        border-radius: 26px;
+        opacity: 1;
+        background: #e9ede6;
+        box-shadow: 0 24px 74px rgba(28, 46, 30, 0.14);
     }
 
     .spade-video {
-        object-position: center top;
+        object-position: center 22%;
         transform: none;
         transition: none;
     }
 
     .spade-video-wash {
         background:
-            linear-gradient(180deg, rgba(247, 248, 244, 0.12) 0%, var(--paper) 82%),
-            linear-gradient(90deg, var(--paper) 0%, rgba(247, 248, 244, 0.28) 54%, var(--paper) 100%);
+            radial-gradient(circle at 66% 28%, rgba(255, 255, 255, 0.24), transparent 26%),
+            linear-gradient(90deg, rgba(247, 248, 244, 0.16) 0%, rgba(247, 248, 244, 0.02) 42%, rgba(247, 248, 244, 0.08)),
+            linear-gradient(0deg, rgba(247, 248, 244, 0.36) 0%, transparent 34%);
         transition: none;
     }
 
     .spade-hero-content {
-        width: 100%;
-        max-width: none;
+        display: contents;
     }
 
     .spade-kicker {
+        position: relative;
+        z-index: 3;
+        order: 1;
         max-width: 100%;
         flex-wrap: wrap;
         gap: 6px 9px;
@@ -1786,6 +1796,9 @@ main {
     }
 
     .spade-hero h1 {
+        position: relative;
+        z-index: 3;
+        order: 2;
         min-height: auto;
         margin-bottom: 16px;
         font-size: clamp(2.46rem, 12vw, 4rem);
@@ -1798,12 +1811,18 @@ main {
     }
 
     .spade-lede {
+        position: relative;
+        z-index: 3;
+        order: 3;
         margin-bottom: 22px;
         font-size: 1rem;
         line-height: 1.68;
     }
 
     .service-picker {
+        position: relative;
+        z-index: 3;
+        order: 5;
         width: 100%;
         margin-bottom: 20px;
         padding: 16px;
@@ -1853,6 +1872,9 @@ main {
     }
 
     .spade-actions {
+        position: relative;
+        z-index: 3;
+        order: 6;
         display: grid;
         grid-template-columns: 1fr;
         gap: 10px;
@@ -1867,6 +1889,7 @@ main {
     }
 
     .spade-portrait {
+        order: 7;
         width: min(100%, 420px);
         align-self: center;
         border-radius: 24px;
@@ -1883,6 +1906,64 @@ main {
         font-size: 0.68rem;
         line-height: 1.35;
         letter-spacing: 0.06em;
+    }
+
+    .capabilities-section {
+        position: relative;
+        min-height: auto;
+        padding: 0;
+        background: #040404;
+    }
+
+    .capabilities-section .section-video {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-position: center;
+        opacity: 0.92;
+    }
+
+    .capabilities-section .edge-shade {
+        z-index: 1;
+        background:
+            linear-gradient(180deg, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.74) 46%, #040404 100%),
+            linear-gradient(90deg, rgba(0, 0, 0, 0.72), transparent 48%, rgba(0, 0, 0, 0.58));
+    }
+
+    .capabilities-section .section-inner {
+        min-height: auto;
+        padding: 104px 20px 44px;
+        margin-top: 0;
+    }
+
+    .cinematic-heading {
+        margin-bottom: 26px;
+    }
+
+    .cinematic-heading h2 {
+        font-size: clamp(3.1rem, 14vw, 5.8rem);
+        line-height: 0.9;
+        text-shadow: 0 10px 34px rgba(0, 0, 0, 0.7);
+    }
+
+    .capabilities-section .capability-grid .liquid-card {
+        min-height: 330px;
+        background: rgba(8, 8, 8, 0.56);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+
+    .capabilities-section .card-top {
+        display: grid;
+        grid-template-columns: 44px 1fr;
+        align-items: start;
+    }
+
+    .capabilities-section .tag-row {
+        justify-content: flex-start;
     }
 
     .cinema-hero {
@@ -1914,10 +1995,6 @@ main {
         flex-direction: column;
         justify-content: flex-end;
         align-items: stretch;
-    }
-
-    .section-inner {
-        padding: 104px 20px 40px;
     }
 
     .capability-grid,
@@ -2005,12 +2082,12 @@ main {
 
     .spade-hero {
         padding: 92px 16px 42px;
-        gap: 22px;
+        gap: 18px;
     }
 
     .spade-video-panel {
-        height: 300px;
-        opacity: 0.28;
+        height: clamp(250px, 76vw, 330px);
+        border-radius: 22px;
     }
 
     .spade-kicker {
@@ -2024,6 +2101,14 @@ main {
 
     .spade-lede {
         font-size: 0.96rem;
+    }
+
+    .capabilities-section .section-inner {
+        padding: 92px 16px 38px;
+    }
+
+    .cinematic-heading h2 {
+        font-size: clamp(2.85rem, 13vw, 4.5rem);
     }
 
     .service-picker {
