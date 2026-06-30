@@ -355,6 +355,7 @@ function initPage() {
             try {
                 await video.play();
             } catch {
+                video.setAttribute("poster", "images/hero-tech-avatar-poster.jpg");
                 // Poster remains visible when autoplay is blocked.
             }
         };
