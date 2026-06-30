@@ -242,6 +242,8 @@ function initPage() {
             video.addEventListener("timeupdate", handleTimeUpdate);
             video.addEventListener("ended", handleEnded);
             video.addEventListener("error", handleError);
+            window.addEventListener("touchstart", playVideo, { passive: true, once: true });
+            window.addEventListener("scroll", playVideo, { passive: true, once: true });
 
             if (video.readyState >= 2) {
                 handleLoaded();
