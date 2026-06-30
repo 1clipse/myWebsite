@@ -230,10 +230,18 @@ function initPage() {
                 }, 100);
             };
 
+            const handleError = () => {
+                window.clearTimeout(restartTimer);
+                window.cancelAnimationFrame(rafId);
+                video.style.opacity = "1";
+                video.closest(".cinema-section")?.classList.add("video-fallback-ready");
+            };
+
             video.loop = false;
             video.addEventListener("loadeddata", handleLoaded);
             video.addEventListener("timeupdate", handleTimeUpdate);
             video.addEventListener("ended", handleEnded);
+            video.addEventListener("error", handleError);
 
             if (video.readyState >= 2) {
                 handleLoaded();

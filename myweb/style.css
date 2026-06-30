@@ -756,6 +756,10 @@ main {
     background: #000;
 }
 
+.capabilities-section {
+    background: #040404 url("images/capabilities-flower-scene-poster.jpg") center / cover no-repeat;
+}
+
 .section-inner {
     position: relative;
     z-index: 2;
@@ -1911,9 +1915,9 @@ main {
 
     .capabilities-section {
         position: relative;
-        min-height: auto;
+        min-height: 108svh;
         padding: 0;
-        background: #040404;
+        background-position: 58% 0;
     }
 
     .capabilities-section .section-video {
@@ -1925,24 +1929,24 @@ main {
         height: 100%;
         object-position: center;
         opacity: 1;
-        filter: saturate(1.12) contrast(1.05) brightness(0.9);
+        filter: saturate(1.16) contrast(1.08) brightness(1);
     }
 
     .capabilities-section .edge-shade {
         z-index: 1;
         background:
-            linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.34) 34%, rgba(0, 0, 0, 0.76) 74%, #040404 100%),
-            linear-gradient(90deg, rgba(0, 0, 0, 0.66), transparent 54%, rgba(0, 0, 0, 0.42));
+            linear-gradient(180deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.16) 31%, rgba(0, 0, 0, 0.7) 70%, #040404 100%),
+            linear-gradient(90deg, rgba(0, 0, 0, 0.52), transparent 56%, rgba(0, 0, 0, 0.28));
     }
 
     .capabilities-section .section-inner {
-        min-height: auto;
+        min-height: 108svh;
         padding: 92px 20px 44px;
         margin-top: 0;
     }
 
-    .cinematic-heading {
-        margin-bottom: min(46vw, 170px);
+    .capabilities-section .cinematic-heading {
+        margin-bottom: clamp(230px, 72vw, 390px);
     }
 
     .cinematic-heading h2 {
@@ -2106,7 +2110,21 @@ main {
     }
 
     .capabilities-section .section-inner {
+        min-height: 112svh;
         padding: 86px 16px 38px;
+    }
+
+    .capabilities-section {
+        min-height: 112svh;
+        background-position: 62% 0;
+    }
+
+    .capabilities-section .section-video {
+        object-position: 62% 0;
+    }
+
+    .capabilities-section .cinematic-heading {
+        margin-bottom: clamp(250px, 82vw, 380px);
     }
 
     .cinematic-heading h2 {
