@@ -1,254 +1,498 @@
-// ===== 页面加载完成后执行 =====
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('个人主页已加载 | 科技感设计');
+function initPage() {
+    if (window.__jinzPageReady) return;
+    window.__jinzPageReady = true;
 
-    // ===== 导航菜单交互 =====
-    const navLinks = document.querySelectorAll('.nav-link');
-    const sections = document.querySelectorAll('section');
+    const body = document.body;
+    const page = body.dataset.page || "home";
+    const header = document.querySelector(".studio-header");
+    const navToggle = document.querySelector(".nav-toggle");
+    const navLinks = Array.from(document.querySelectorAll(".nav-link"));
+    const sections = Array.from(document.querySelectorAll("main section[id]"));
+    const toast = document.querySelector(".toast");
+    const copyWechat = document.querySelector(".copy-wechat");
+    const qrButton = document.querySelector(".qr-button");
+    const qrDialog = document.querySelector(".qr-dialog");
+    const dialogClose = document.querySelector(".dialog-close");
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // 设置初始活动链接
-    setActiveNavLink();
+    let toastTimer;
 
-    // 为每个导航链接添加点击事件
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-
-            // 获取目标部分ID
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-
-            // 滚动到目标部分
-            const targetSection = document.querySelector(targetId);
-            if (targetSection) {
-                window.scrollTo({
-                    top: targetSection.offsetTop - 100,
-                    behavior: 'smooth'
-                });
-
-                // 更新活动链接
-                updateActiveNavLink(targetId);
-            }
-        });
-    });
-
-    // 监听滚动以更新活动导航链接
-    window.addEventListener('scroll', setActiveNavLink);
-
-    // ===== 技能标签悬停效果 =====
-    const skillTags = document.querySelectorAll('.skill-tag');
-    skillTags.forEach(tag => {
-        tag.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-4px) scale(1.05)';
-        });
-
-        tag.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
-
-    // ===== 卡片悬停效果增强 =====
-    const cards = document.querySelectorAll('.profile-card, .project-card, .qr-card');
-    cards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.zIndex = '10';
-        });
-
-        card.addEventListener('mouseleave', function() {
-            this.style.zIndex = '1';
-        });
-    });
-
-    // ===== 状态指示器动画 =====
-    const statusIndicator = document.querySelector('.status-indicator');
-    if (statusIndicator) {
-        setInterval(() => {
-            statusIndicator.style.boxShadow = `0 0 ${10 + Math.random() * 10}px var(--neon-green)`;
-        }, 2000);
+    function showToast(message) {
+        if (!toast) return;
+        toast.textContent = message;
+        toast.classList.add("visible");
+        window.clearTimeout(toastTimer);
+        toastTimer = window.setTimeout(() => {
+            toast.classList.remove("visible");
+        }, 2200);
     }
 
-    // ===== 网格背景动画控制 =====
-    const gridBackground = document.querySelector('.grid-background');
-    if (gridBackground) {
-        // 鼠标移动时轻微改变网格位置
-        document.addEventListener('mousemove', function(e) {
-            const x = (e.clientX / window.innerWidth - 0.5) * 10;
-            const y = (e.clientY / window.innerHeight - 0.5) * 10;
-            gridBackground.style.transform = `translate(${x}px, ${y}px)`;
+    function setHeaderState() {
+        if (!header) return;
+        const lightHero = document.querySelector(".spade-hero");
+        const threshold = page === "home" && lightHero ? Math.max(24, lightHero.offsetHeight - 120) : 24;
+        header.dataset.elevated = String(window.scrollY > threshold);
+    }
+
+    function closeNav() {
+        body.classList.remove("nav-open");
+        navToggle?.setAttribute("aria-expanded", "false");
+    }
+
+    function getLocalAnchor(href) {
+        if (!href || !href.includes("#")) return null;
+        const url = new URL(href, window.location.href);
+        const samePath = url.pathname === window.location.pathname;
+        if (!samePath || !url.hash) return null;
+        return document.querySelector(url.hash);
+    }
+
+    function markActiveNav() {
+        navLinks.forEach((link) => {
+            const navPage = link.dataset.navPage;
+            if (!navPage) return;
+            link.classList.toggle("active", navPage === page);
         });
     }
 
-    // ===== 统计数字动画 =====
-    const statValues = document.querySelectorAll('.stat-value');
-    statValues.forEach(stat => {
-        const originalText = stat.textContent;
-        if (originalText.includes('+') || originalText.includes('年') || originalText === '100%') {
-            // 简单动画：数字变化
-            let finalValue = originalText.replace(/\D/g, '');
-            if (finalValue) {
-                animateNumber(stat, parseInt(finalValue), originalText.includes('+') ? '+' : '');
-            }
-        }
-    });
+    function initReveal() {
+        const revealTargets = Array.from(document.querySelectorAll(".reveal"));
 
-    // ===== 二维码区域提示 =====
-    const qrPlaceholder = document.querySelector('.qr-placeholder');
-    if (qrPlaceholder) {
-        qrPlaceholder.addEventListener('click', function() {
-            alert('提示：要使用你的二维码，请执行以下操作：\n1. 将二维码图片保存为 "qrcode.png"\n2. 将其放在 "images" 文件夹中\n3. 替换当前二维码占位符');
-        });
-    }
-
-    // ===== 控制台欢迎信息 =====
-    console.log('%c', 'color: #00ffff; font-size: 16px; font-weight: bold;');
-    console.log('%c', 'color: #9d4edd;');
-    console.log('%c', 'color: #00ff9d;');
-    console.log('========================================');
-
-    // ===== 辅助函数 =====
-
-    // 设置活动导航链接
-    function setActiveNavLink() {
-        let currentSectionId = '';
-
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-
-            if (window.scrollY >= sectionTop - 150 &&
-                window.scrollY < sectionTop + sectionHeight - 150) {
-                currentSectionId = `#${section.id}`;
+        revealTargets.forEach((element) => {
+            if (element.getBoundingClientRect().top < window.innerHeight * 0.92) {
+                element.classList.add("is-visible");
             }
         });
 
-        updateActiveNavLink(currentSectionId);
-    }
-
-    // 更新活动导航链接
-    function updateActiveNavLink(targetId) {
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === targetId) {
-                link.classList.add('active');
-            }
-        });
-    }
-
-    // 数字动画
-    function animateNumber(element, finalNumber, suffix = '') {
-        let start = 0;
-        const duration = 2000; // 动画持续时间
-        const increment = finalNumber / (duration / 16); // 60fps
-        const timer = setInterval(() => {
-            start += increment;
-            if (start >= finalNumber) {
-                start = finalNumber;
-                clearInterval(timer);
-            }
-            element.textContent = Math.floor(start) + suffix;
-        }, 16);
-    }
-
-    // ===== 键盘快捷键 =====
-    document.addEventListener('keydown', function(e) {
-        // 按 'H' 键返回顶部
-        if (e.key === 'h' || e.key === 'H') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (!("IntersectionObserver" in window)) {
+            revealTargets.forEach((element) => element.classList.add("is-visible"));
+            return;
         }
 
-        // 按 'D' 键切换控制台调试模式
-        if (e.key === 'd' || e.key === 'D') {
-            if (e.ctrlKey) {
-                console.log('%c🔧 调试模式:', 'color: #ff9900; font-weight: bold;');
-                console.log('窗口大小:', window.innerWidth, 'x', window.innerHeight);
-                console.log('活动部分:', document.querySelector('.nav-link.active')?.getAttribute('href'));
-            }
-        }
-    });
-
-    // ===== 页面加载动画 =====
-    // 添加淡入效果
-    document.body.style.opacity = '0';
-    document.body.style.transition = 'opacity 0.5s ease';
-
-    setTimeout(() => {
-        document.body.style.opacity = '1';
-    }, 100);
-
-    // ===== 二维码图片调试 =====
-    const qrcodeImg = document.getElementById('qrcode-img');
-    if (qrcodeImg) {
-        // 添加加载成功事件
-        qrcodeImg.addEventListener('load', function() {
-            console.log('二维码图片加载成功');
-            console.log('  图片尺寸:', this.naturalWidth, 'x', this.naturalHeight);
-            console.log('  图片路径:', this.src);
-        });
-
-        // 添加加载失败事件
-        qrcodeImg.addEventListener('error', function() {
-            console.error('二维码图片加载失败');
-            console.error('  尝试加载的路径:', this.src);
-            console.error('  请检查文件是否存在:', 'images/qrcode.png');
-            // 保持图片显示，不隐藏
-        });
-
-        // 检查当前状态
-        console.log('二维码图片状态检查:');
-        console.log('  图片ID:', qrcodeImg.id);
-        console.log('  src属性:', qrcodeImg.src);
-        console.log('  complete:', qrcodeImg.complete);
-        console.log('  naturalWidth:', qrcodeImg.naturalWidth);
-        console.log('  naturalHeight:', qrcodeImg.naturalHeight);
-
-        // 如果已经完成加载但尺寸为0，说明加载失败
-        if (qrcodeImg.complete && qrcodeImg.naturalHeight === 0) {
-            console.warn('二维码图片可能加载失败 (complete但naturalHeight为0)');
-        }
-    } else {
-        console.error('未找到二维码图片元素 (id="qrcode-img")');
-    }
-
-    // ===== 性能优化：图片懒加载占位符 =====
-    // 如果未来添加图片，可以在这里实现懒加载
-    const images = document.querySelectorAll('img[data-src]');
-    if (images.length > 0) {
-        const imageObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    const dataSrc = img.dataset.src;
-                    if (dataSrc) {
-                        img.src = dataSrc;
-                        imageObserver.unobserve(img);
+        const revealObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("is-visible");
+                        revealObserver.unobserve(entry.target);
                     }
-                }
+                });
+            },
+            { threshold: 0.14 }
+        );
+
+        revealTargets.forEach((element) => revealObserver.observe(element));
+    }
+
+    function initSectionSpy() {
+        if (page !== "home" || !("IntersectionObserver" in window)) return;
+        const anchorLinks = navLinks.filter((link) => {
+            try {
+                return Boolean(getLocalAnchor(link.getAttribute("href")));
+            } catch {
+                return false;
+            }
+        });
+        if (!anchorLinks.length) return;
+
+        const sectionObserver = new IntersectionObserver(
+            (entries) => {
+                const visible = entries
+                    .filter((entry) => entry.isIntersecting)
+                    .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+                if (!visible) return;
+
+                anchorLinks.forEach((link) => {
+                    const hash = new URL(link.href, window.location.href).hash;
+                    link.classList.toggle("active", hash === `#${visible.target.id}`);
+                });
+            },
+            { rootMargin: "-35% 0px -50% 0px", threshold: [0.08, 0.25, 0.5] }
+        );
+
+        sections.forEach((section) => sectionObserver.observe(section));
+    }
+
+    function initRepoFilters() {
+        const filterButtons = Array.from(document.querySelectorAll(".filter-chip"));
+        const repoCards = Array.from(document.querySelectorAll(".repo-card"));
+        if (!filterButtons.length || !repoCards.length) return;
+
+        filterButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+                const filter = button.dataset.filter || "all";
+                filterButtons.forEach((item) => item.classList.toggle("active", item === button));
+                repoCards.forEach((card) => {
+                    const visible = filter === "all" || card.dataset.category === filter;
+                    card.hidden = !visible;
+                    card.classList.toggle("filtered-out", !visible);
+                });
+                showToast(filter === "all" ? "已显示全部项目" : `已切换到 ${button.textContent.trim()}`);
+            });
+        });
+    }
+
+    function initPracticeTabs() {
+        const tabButtons = Array.from(document.querySelectorAll(".lab-tab"));
+        const panels = Array.from(document.querySelectorAll(".lab-panel"));
+        const toastButtons = Array.from(document.querySelectorAll("[data-toast]"));
+
+        tabButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+                const tab = button.dataset.tab;
+                tabButtons.forEach((item) => {
+                    const active = item === button;
+                    item.classList.toggle("active", active);
+                    item.setAttribute("aria-selected", String(active));
+                });
+                panels.forEach((panel) => {
+                    const active = panel.dataset.panel === tab;
+                    panel.classList.toggle("active", active);
+                    panel.hidden = !active;
+                });
             });
         });
 
-        images.forEach(img => imageObserver.observe(img));
+        toastButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+                showToast(button.dataset.toast || "交互已触发");
+            });
+        });
     }
-});
 
-// ===== 页面可见性API =====
-document.addEventListener('visibilitychange', function() {
-    if (document.hidden) {
-        console.log('页面已隐藏');
-    } else {
-        console.log('页面已恢复显示');
+    function initFadingVideos() {
+        const videos = Array.from(document.querySelectorAll(".fading-video[data-fading-video]"));
+        const FADE_MS = 500;
+        const FADE_OUT_LEAD = 0.55;
+
+        videos.forEach((video) => {
+            let rafId = 0;
+            let fadingOut = false;
+            let restartTimer = 0;
+
+            const getOpacity = () => {
+                const value = Number.parseFloat(video.style.opacity || "0");
+                return Number.isFinite(value) ? value : 0;
+            };
+
+            const fadeTo = (target, duration = FADE_MS) => {
+                window.cancelAnimationFrame(rafId);
+                const start = getOpacity();
+                const startTime = performance.now();
+
+                const tick = (now) => {
+                    const progress = Math.min((now - startTime) / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    video.style.opacity = String(start + (target - start) * eased);
+                    if (progress < 1) {
+                        rafId = window.requestAnimationFrame(tick);
+                    }
+                };
+
+                rafId = window.requestAnimationFrame(tick);
+            };
+
+            const playVideo = async () => {
+                try {
+                    await video.play();
+                } catch {
+                    video.style.opacity = "1";
+                }
+            };
+
+            const handleLoaded = () => {
+                video.style.opacity = "0";
+                playVideo();
+                fadeTo(1);
+            };
+
+            const handleTimeUpdate = () => {
+                const remaining = video.duration - video.currentTime;
+                if (!fadingOut && Number.isFinite(remaining) && remaining > 0 && remaining <= FADE_OUT_LEAD) {
+                    fadingOut = true;
+                    fadeTo(0);
+                }
+            };
+
+            const handleEnded = () => {
+                window.clearTimeout(restartTimer);
+                window.cancelAnimationFrame(rafId);
+                video.style.opacity = "0";
+                restartTimer = window.setTimeout(() => {
+                    try {
+                        video.currentTime = 0;
+                    } catch {
+                        return;
+                    }
+                    fadingOut = false;
+                    playVideo();
+                    fadeTo(1);
+                }, 100);
+            };
+
+            video.loop = false;
+            video.addEventListener("loadeddata", handleLoaded);
+            video.addEventListener("timeupdate", handleTimeUpdate);
+            video.addEventListener("ended", handleEnded);
+
+            if (video.readyState >= 2) {
+                handleLoaded();
+            } else {
+                video.load();
+            }
+
+            window.addEventListener("pagehide", () => {
+                window.clearTimeout(restartTimer);
+                window.cancelAnimationFrame(rafId);
+            }, { once: true });
+        });
     }
-});
 
-// ===== 窗口大小调整优化 =====
-let resizeTimeout;
-window.addEventListener('resize', function() {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(function() {
-        console.log('窗口大小已调整:', window.innerWidth, 'x', window.innerHeight);
-    }, 250);
-});
+    function initStoryCards() {
+        const cards = Array.from(document.querySelectorAll(".story-card"));
+        if (!cards.length) return;
 
-// ===== 错误处理 =====
-window.addEventListener('error', function(e) {
-    console.error('页面错误:', e.message);
-});
+        const updateCards = () => {
+            const viewportMid = window.innerHeight * 0.62;
+            cards.forEach((card) => {
+                const rect = card.getBoundingClientRect();
+                const distance = Math.abs(rect.top + rect.height * 0.35 - viewportMid);
+                const range = Math.max(window.innerHeight * 0.6, 1);
+                const progress = Math.max(0, Math.min(1, 1 - distance / range));
+                card.style.setProperty("--story-progress", progress.toFixed(3));
+            });
+        };
+
+        updateCards();
+        window.addEventListener("scroll", updateCards, { passive: true });
+        window.addEventListener("resize", updateCards);
+    }
+
+    function initTypewriter() {
+        const title = document.querySelector("[data-typewriter]");
+        const output = document.querySelector("[data-typewriter-output]");
+        const cursor = document.querySelector(".type-cursor");
+        if (!title || !output || prefersReducedMotion) {
+            cursor?.classList.add("is-done");
+            return;
+        }
+
+        const text = title.dataset.typewriter || "";
+        let index = 0;
+        output.textContent = "";
+
+        window.setTimeout(() => {
+            const timer = window.setInterval(() => {
+                index += 1;
+                output.textContent = text.slice(0, index);
+                if (index >= text.length) {
+                    window.clearInterval(timer);
+                    cursor?.classList.add("is-done");
+                }
+            }, 38);
+        }, 420);
+    }
+
+    function initServicePicker() {
+        const buttons = Array.from(document.querySelectorAll(".service-pill"));
+        const status = document.querySelector("[data-service-status]");
+        if (!buttons.length || !status) return;
+
+        const selected = new Set();
+
+        const render = () => {
+            const values = Array.from(selected);
+            if (!values.length) {
+                status.classList.remove("is-active");
+                status.textContent = "Please click to select services above.";
+                return;
+            }
+
+            status.classList.add("is-active");
+            status.innerHTML = `<span>Ready to inquire about: ${values.join(", ")}</span><a href="#contact">Let's Go</a>`;
+        };
+
+        buttons.forEach((button) => {
+            button.addEventListener("click", () => {
+                const service = button.dataset.service || button.textContent.trim();
+                if (selected.has(service)) {
+                    selected.delete(service);
+                } else {
+                    selected.add(service);
+                }
+                button.classList.toggle("is-active", selected.has(service));
+                button.setAttribute("aria-pressed", String(selected.has(service)));
+                render();
+            });
+        });
+
+        render();
+    }
+
+    function initScrubVideo() {
+        const video = document.querySelector("[data-scrub-video]");
+        if (!video) return;
+
+        const panel = video.closest(".spade-video-panel");
+        let rafId = 0;
+        let targetTime = 0;
+        let smoothTime = 0;
+        let pendingSeek = false;
+        let lastSeekAt = 0;
+        let pointerX = 0.58;
+        let pointerY = 0.34;
+        let smoothX = pointerX;
+        let smoothY = pointerY;
+
+        const isDesktop = () => window.innerWidth >= 1024;
+
+        const playMobile = async () => {
+            if (isDesktop()) return;
+            video.autoplay = true;
+            try {
+                await video.play();
+            } catch {
+                // Poster remains visible when autoplay is blocked.
+            }
+        };
+
+        const handleMouseMove = (event) => {
+            if (!isDesktop() || !video.duration || !Number.isFinite(video.duration)) return;
+            pointerX = Math.max(0, Math.min(1, event.clientX / window.innerWidth));
+            pointerY = Math.max(0, Math.min(1, event.clientY / window.innerHeight));
+            const lookRange = 0.62;
+            const start = video.duration * 0.18;
+            targetTime = start + pointerX * video.duration * lookRange;
+            targetTime = Math.max(0, Math.min(video.duration - 0.08, targetTime));
+        };
+
+        const tick = (now) => {
+            if (isDesktop() && video.duration && Number.isFinite(video.duration)) {
+                smoothX += (pointerX - smoothX) * 0.08;
+                smoothY += (pointerY - smoothY) * 0.08;
+                smoothTime += (targetTime - smoothTime) * 0.12;
+
+                panel?.style.setProperty("--look-x", `${(0.5 - smoothX) * 18}px`);
+                panel?.style.setProperty("--look-y", `${(0.42 - smoothY) * 12}px`);
+                panel?.style.setProperty("--look-glow-x", `${42 + smoothX * 38}%`);
+                panel?.style.setProperty("--look-glow-y", `${18 + smoothY * 40}%`);
+
+                if (!pendingSeek && now - lastSeekAt > 90 && Math.abs(video.currentTime - smoothTime) > 0.045) {
+                    pendingSeek = true;
+                    lastSeekAt = now;
+                    try {
+                        video.currentTime = smoothTime;
+                    } catch {
+                        pendingSeek = false;
+                    }
+                }
+            }
+
+            rafId = window.requestAnimationFrame(tick);
+        };
+
+        video.addEventListener("loadedmetadata", () => {
+            targetTime = Math.min(video.duration || 0, (video.duration || 0) * 0.22);
+            smoothTime = targetTime;
+            if (isDesktop()) {
+                video.currentTime = targetTime;
+            } else {
+                playMobile();
+            }
+        });
+
+        video.addEventListener("seeked", () => {
+            pendingSeek = false;
+        });
+
+        window.addEventListener("mousemove", handleMouseMove, { passive: true });
+        window.addEventListener("resize", playMobile);
+        window.addEventListener("pagehide", () => window.cancelAnimationFrame(rafId), { once: true });
+        rafId = window.requestAnimationFrame(tick);
+        playMobile();
+    }
+
+    navToggle?.addEventListener("click", () => {
+        const isOpen = body.classList.toggle("nav-open");
+        navToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    navLinks.forEach((link) => {
+        link.addEventListener("click", (event) => {
+            const href = link.getAttribute("href");
+            let target = null;
+            try {
+                target = getLocalAnchor(href);
+            } catch {
+                target = null;
+            }
+            if (!target) {
+                closeNav();
+                return;
+            }
+
+            event.preventDefault();
+            closeNav();
+            target.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
+            history.replaceState(null, "", new URL(href, window.location.href).hash);
+        });
+    });
+
+    copyWechat?.addEventListener("click", async () => {
+        const value = copyWechat.dataset.copy || "Jinzy0416";
+        try {
+            await navigator.clipboard.writeText(value);
+            showToast(`已复制微信号：${value}`);
+        } catch {
+            showToast(`微信号：${value}`);
+        }
+    });
+
+    qrButton?.addEventListener("click", () => {
+        if (typeof qrDialog?.showModal === "function") {
+            qrDialog.showModal();
+        } else {
+            showToast("当前浏览器不支持弹窗预览，请直接长按或右键保存二维码。");
+        }
+    });
+
+    dialogClose?.addEventListener("click", () => qrDialog?.close());
+    qrDialog?.addEventListener("click", (event) => {
+        if (event.target === qrDialog) qrDialog.close();
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            closeNav();
+            if (qrDialog?.open) qrDialog.close();
+        }
+    });
+
+    document.querySelectorAll("img").forEach((image) => {
+        image.addEventListener("error", () => {
+            image.closest(".qr-card")?.classList.add("asset-error");
+            showToast(`图片加载失败：${image.getAttribute("src")}`);
+        });
+    });
+
+    window.addEventListener("scroll", setHeaderState, { passive: true });
+    markActiveNav();
+    setHeaderState();
+    initReveal();
+    initSectionSpy();
+    initRepoFilters();
+    initPracticeTabs();
+    initStoryCards();
+    initTypewriter();
+    initServicePicker();
+    initScrubVideo();
+    initFadingVideos();
+}
+
+if (document.body) {
+    initPage();
+} else if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initPage, { once: true });
+} else {
+    initPage();
+}

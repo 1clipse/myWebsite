@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="金子溢的 GitHub 项目档案馆，完整展示 1clipse 账号下的 7 个公开仓库。">
+    <title>Projects | JINZ LAB STUDIO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Noto+Sans+SC:wght@400;500;700;900&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css?v=20260630-mainframe">
+</head>
+<body data-page="projects">
+    <header class="studio-header" data-elevated="false">
+        <a class="studio-brand" href="index.html#top" aria-label="返回首页">
+            <strong>金子溢</strong>
+            <span>/ JINZ LAB · STUDIO</span>
+        </a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="展开导航">
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="studio-nav" id="site-nav" aria-label="主导航">
+            <a class="nav-link" data-nav-page="home" href="index.html#top">WORK</a>
+            <a class="nav-link active" data-nav-page="projects" href="projects.html">PROJECTS</a>
+            <a class="nav-link" data-nav-page="practice" href="practice.html">PRACTICE</a>
+            <a class="nav-link" href="index.html#contact">CONTACT</a>
+            <a class="nav-cta" href="https://github.com/1clipse" target="_blank" rel="noopener noreferrer">GITHUB</a>
+        </nav>
+    </header>
+
+    <main id="top">
+        <section class="archive-hero page-frame" aria-labelledby="projects-hero-title">
+            <div class="archive-copy reveal">
+                <p class="studio-kicker">// Repository Atlas</p>
+                <h1 id="projects-hero-title">All seven public repositories, cut into one cinematic archive.</h1>
+                <p class="page-lede">这里收纳 GitHub 用户 <a class="inline-link" href="https://github.com/1clipse" target="_blank" rel="noopener noreferrer">1clipse</a> 当前公开的 7 个项目。AI、前端、小程序和早期练习全部在这里，方便继续扩展、筛选和复盘。</p>
+            </div>
+            <aside class="archive-panel liquid-card reveal" aria-label="GitHub 概览">
+                <div>
+                    <span>PROFILE</span>
+                    <strong>1clipse</strong>
+                </div>
+                <div>
+                    <span>PUBLIC REPOS</span>
+                    <strong>07</strong>
+                </div>
+                <div>
+                    <span>SNAPSHOT</span>
+                    <strong>2026.06.30</strong>
+                </div>
+            </aside>
+        </section>
+
+        <section class="project-console page-frame" aria-labelledby="filter-title">
+            <div class="console-heading reveal">
+                <div>
+                    <p class="studio-kicker">// Filter Console</p>
+                    <h2 id="filter-title">按项目方向快速切换。</h2>
+                </div>
+                <p>短促点击反馈，没有持续粒子和跑马灯；内容本身就是主角。</p>
+            </div>
+            <div class="filter-bar reveal" aria-label="项目筛选">
+                <button class="filter-chip active" type="button" data-filter="all">全部</button>
+                <button class="filter-chip" type="button" data-filter="ai">AI / Python</button>
+                <button class="filter-chip" type="button" data-filter="frontend">前端 / 页面</button>
+                <button class="filter-chip" type="button" data-filter="archive">早期练习</button>
+            </div>
+
+            <div class="repo-grid">
+                <article class="repo-card liquid-card reveal" data-category="ai" data-lang="Python">
+                    <div class="repo-card-head">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Updated 2026.06.01</span>
+                    </div>
+                    <h3>llm-monitor-v8</h3>
+                    <p>工业风本地优先 LLM 监控仪表盘，集成 FastAPI、React、WebSocket、Prometheus 指标、异常检测与风险评分。</p>
+                    <div class="project-tech">
+                        <span>Python</span>
+                        <span>FastAPI</span>
+                        <span>React</span>
+                        <span>Prometheus</span>
+                    </div>
+                    <a class="glass-button repo-link" href="https://github.com/1clipse/llm-monitor-v8" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> 查看代码</a>
+                </article>
+
+                <article class="repo-card liquid-card reveal" data-category="ai" data-lang="Python">
+                    <div class="repo-card-head">
+                        <i class="fa-solid fa-network-wired"></i>
+                        <span>Updated 2026.05.30</span>
+                    </div>
+                    <h3>knowledge-graph-robot</h3>
+                    <p>知识图谱与机器人方向的 Python 项目，可作为检索增强、问答系统和自动化代理的实验底座。</p>
+                    <div class="project-tech">
+                        <span>Python</span>
+                        <span>Knowledge Graph</span>
+                        <span>Robot</span>
+                    </div>
+                    <a class="glass-button repo-link" href="https://github.com/1clipse/knowledge-graph-robot" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> 查看代码</a>
+                </article>
+
+                <article class="repo-card liquid-card reveal" data-category="frontend" data-lang="JavaScript">
+                    <div class="repo-card-head">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                        <span>Updated 2026.04.16</span>
+                    </div>
+                    <h3>myUniapp</h3>
+                    <p>企业宣传小程序练习，使用 HBuilderX、Trae 和微信开发者工具制作，记录真实移动端限制与落地经验。</p>
+                    <div class="project-tech">
+                        <span>JavaScript</span>
+                        <span>UniApp</span>
+                        <span>WeChat</span>
+                        <span>1 Star</span>
+                    </div>
+                    <a class="glass-button repo-link" href="https://github.com/1clipse/myUniapp" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> 查看代码</a>
+                </article>
+
+                <article class="repo-card liquid-card reveal" data-category="frontend" data-lang="CSS">
+                    <div class="repo-card-head">
+                        <i class="fa-solid fa-palette"></i>
+                        <span>Updated 2026.04.07</span>
+                    </div>
+                    <h3>myWebsite</h3>
+                    <p>个人网站与前端页面练习仓库，是视觉风格、布局组件和响应式设计持续迭代的主阵地。</p>
+                    <div class="project-tech">
+                        <span>CSS</span>
+                        <span>Portfolio</span>
+                        <span>Responsive</span>
+                    </div>
+                    <a class="glass-button repo-link" href="https://github.com/1clipse/myWebsite" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> 查看代码</a>
+                </article>
+
+                <article class="repo-card liquid-card reveal" data-category="ai" data-lang="AI">
+                    <div class="repo-card-head">
+                        <i class="fa-solid fa-microchip"></i>
+                        <span>Updated 2026.04.05</span>
+                    </div>
+                    <h3>AI-Project</h3>
+                    <p>在 AI 辅助下创建的系统型代码库，用来沉淀个人对 AI 编程、自动化构建和系统拆解的实践。</p>
+                    <div class="project-tech">
+                        <span>AI</span>
+                        <span>System</span>
+                        <span>Automation</span>
+                    </div>
+                    <a class="glass-button repo-link" href="https://github.com/1clipse/AI-Project" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> 查看代码</a>
+                </article>
+
+                <article class="repo-card liquid-card reveal" data-category="archive" data-lang="Learning">
+                    <div class="repo-card-head">
+                        <i class="fa-solid fa-seedling"></i>
+                        <span>Updated 2023.11.06</span>
+                    </div>
+                    <h3>jzy2010701408</h3>
+                    <p>早期测试仓库，保留第一次尝试的轨迹。它适合放进成长线里，提醒项目能力是一点点练出来的。</p>
+                    <div class="project-tech">
+                        <span>First Test</span>
+                        <span>Learning</span>
+                    </div>
+                    <a class="glass-button repo-link" href="https://github.com/1clipse/jzy2010701408" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> 查看代码</a>
+                </article>
+
+                <article class="repo-card liquid-card reveal" data-category="archive" data-lang="Archive">
+                    <div class="repo-card-head">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        <span>Updated 2022.10.21</span>
+                    </div>
+                    <h3>Jinz</h3>
+                    <p>最早期的个人仓库之一，作为作品集时间线的起点保留下来，后续可以继续整理成成长档案。</p>
+                    <div class="project-tech">
+                        <span>Archive</span>
+                        <span>Personal</span>
+                    </div>
+                    <a class="glass-button repo-link" href="https://github.com/1clipse/Jinz" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> 查看代码</a>
+                </article>
+            </div>
+        </section>
+
+        <section class="route-section page-frame" aria-labelledby="next-title">
+            <div class="console-heading reveal">
+                <div>
+                    <p class="studio-kicker">// Next Portal</p>
+                    <h2 id="next-title">继续把项目卡片变成可复用组件。</h2>
+                </div>
+            </div>
+            <div class="route-grid">
+                <a class="route-card liquid-card reveal" href="practice.html">
+                    <i class="fa-solid fa-table-cells-large"></i>
+                    <strong>打开组件练习场</strong>
+                    <span>练习按钮、卡片、标签页、项目列表和响应式面板。</span>
+                </a>
+                <a class="route-card liquid-card reveal" href="index.html#contact">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <strong>回到联系节点</strong>
+                    <span>邮箱、电话、GitHub 和微信二维码都保留在主页底部。</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>© 2026 JINZ LAB PROJECT ARCHIVE</p>
+        <p><a href="index.html">Home</a> · <a href="practice.html">Practice</a> · <a href="https://github.com/1clipse" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+    </footer>
+
+    <div class="toast" role="status" aria-live="polite"></div>
+    <script src="script.js?v=20260630-mainframe"></script>
+</body>
+</html>

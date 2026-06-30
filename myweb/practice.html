@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="金子溢的前端组件练习场，包含按钮、项目卡片、标签页、响应式面板和 GitHub 仓库组件练习。">
+    <title>Practice | JINZ LAB STUDIO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Noto+Sans+SC:wght@400;500;700;900&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css?v=20260630-mainframe">
+</head>
+<body data-page="practice">
+    <header class="studio-header" data-elevated="false">
+        <a class="studio-brand" href="index.html#top" aria-label="返回首页">
+            <strong>金子溢</strong>
+            <span>/ JINZ LAB · STUDIO</span>
+        </a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="展开导航">
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="studio-nav" id="site-nav" aria-label="主导航">
+            <a class="nav-link" data-nav-page="home" href="index.html#top">WORK</a>
+            <a class="nav-link" data-nav-page="projects" href="projects.html">PROJECTS</a>
+            <a class="nav-link active" data-nav-page="practice" href="practice.html">PRACTICE</a>
+            <a class="nav-link" href="index.html#contact">CONTACT</a>
+            <a class="nav-cta" href="projects.html">ENTER PROJECTS</a>
+        </nav>
+    </header>
+
+    <main id="top">
+        <section class="practice-hero page-frame" aria-labelledby="practice-hero-title">
+            <div class="archive-copy reveal">
+                <p class="studio-kicker">// Component Lab</p>
+                <h1 id="practice-hero-title">A quiet control room for sharper UI practice.</h1>
+                <p class="page-lede">这里不做连续粒子、磁吸跟随和跑马灯，而是把按钮、项目卡片、标签页和响应式面板做成安静、利落、有质感的交互练习。</p>
+            </div>
+            <aside class="lab-console liquid-card reveal" aria-label="组件练习概览">
+                <div class="console-row">
+                    <span>Component Set</span>
+                    <strong>04</strong>
+                </div>
+                <div class="console-list">
+                    <span>Buttons</span>
+                    <span>Cards</span>
+                    <span>Tabs</span>
+                    <span>Responsive</span>
+                </div>
+            </aside>
+        </section>
+
+        <section class="lab-section page-frame" aria-labelledby="tabs-title">
+            <div class="console-heading reveal">
+                <div>
+                    <p class="studio-kicker">// Component Deck</p>
+                    <h2 id="tabs-title">切换不同练习模块。</h2>
+                </div>
+                <p>每次点击只给短促反馈，保证页面高级、克制、清爽。</p>
+            </div>
+
+            <div class="lab-tabs reveal" role="tablist" aria-label="组件练习模块">
+                <button class="lab-tab active" type="button" role="tab" aria-selected="true" aria-controls="panel-buttons" id="tab-buttons" data-tab="buttons">按钮状态</button>
+                <button class="lab-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-cards" id="tab-cards" data-tab="cards">项目卡片</button>
+                <button class="lab-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-layout" id="tab-layout" data-tab="layout">响应式面板</button>
+            </div>
+
+            <div class="lab-panels">
+                <article class="lab-panel active liquid-card reveal" role="tabpanel" id="panel-buttons" aria-labelledby="tab-buttons" data-panel="buttons">
+                    <div class="button-stage">
+                        <button class="mega-button" type="button" data-toast="主要按钮状态已触发">
+                            <i class="fa-solid fa-rocket"></i>
+                            Launch Build
+                        </button>
+                        <button class="mega-button alt" type="button" data-toast="次级按钮状态已触发">
+                            <i class="fa-solid fa-wave-square"></i>
+                            Scan UI
+                        </button>
+                        <button class="mega-button quiet" type="button" data-toast="安静按钮状态已触发">
+                            <i class="fa-solid fa-eye"></i>
+                            Preview
+                        </button>
+                    </div>
+                </article>
+
+                <article class="lab-panel liquid-card reveal" role="tabpanel" id="panel-cards" aria-labelledby="tab-cards" data-panel="cards" hidden>
+                    <div class="mini-project-grid">
+                        <a class="mini-project" href="https://github.com/1clipse/llm-monitor-v8" target="_blank" rel="noopener noreferrer">
+                            <span>LLM</span>
+                            <strong>llm-monitor-v8</strong>
+                            <small>风险评分 · 实时指标 · WebSocket</small>
+                        </a>
+                        <a class="mini-project" href="https://github.com/1clipse/knowledge-graph-robot" target="_blank" rel="noopener noreferrer">
+                            <span>KG</span>
+                            <strong>knowledge-graph-robot</strong>
+                            <small>知识图谱 · Python · Robot</small>
+                        </a>
+                        <a class="mini-project" href="https://github.com/1clipse/myUniapp" target="_blank" rel="noopener noreferrer">
+                            <span>UNI</span>
+                            <strong>myUniapp</strong>
+                            <small>企业小程序 · 微信生态</small>
+                        </a>
+                        <a class="mini-project" href="https://github.com/1clipse/myWebsite" target="_blank" rel="noopener noreferrer">
+                            <span>WEB</span>
+                            <strong>myWebsite</strong>
+                            <small>个人站点 · 响应式布局</small>
+                        </a>
+                        <a class="mini-project" href="https://github.com/1clipse/AI-Project" target="_blank" rel="noopener noreferrer">
+                            <span>AI</span>
+                            <strong>AI-Project</strong>
+                            <small>AI 辅助 · 系统实践</small>
+                        </a>
+                        <a class="mini-project" href="https://github.com/1clipse/jzy2010701408" target="_blank" rel="noopener noreferrer">
+                            <span>LAB</span>
+                            <strong>jzy2010701408</strong>
+                            <small>早期测试 · 学习轨迹</small>
+                        </a>
+                        <a class="mini-project" href="https://github.com/1clipse/Jinz" target="_blank" rel="noopener noreferrer">
+                            <span>ARC</span>
+                            <strong>Jinz</strong>
+                            <small>个人档案 · 时间线起点</small>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="lab-panel liquid-card reveal" role="tabpanel" id="panel-layout" aria-labelledby="tab-layout" data-panel="layout" hidden>
+                    <div class="responsive-preview" aria-label="响应式面板示意">
+                        <div class="preview-sidebar">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div class="preview-main">
+                            <div class="preview-chart">
+                                <i></i>
+                                <i></i>
+                                <i></i>
+                                <i></i>
+                            </div>
+                            <div class="preview-grid">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="route-section page-frame" aria-labelledby="practice-project-title">
+            <div class="console-heading reveal">
+                <div>
+                    <p class="studio-kicker">// Cross Page Practice</p>
+                    <h2 id="practice-project-title">用真实项目继续练组件。</h2>
+                </div>
+            </div>
+            <div class="route-grid">
+                <a class="route-card liquid-card reveal" href="projects.html">
+                    <i class="fa-brands fa-github"></i>
+                    <strong>去项目库筛选仓库</strong>
+                    <span>AI、前端、早期练习三类项目可以直接过滤。</span>
+                </a>
+                <a class="route-card liquid-card reveal" href="index.html#projects">
+                    <i class="fa-solid fa-house-chimney-window"></i>
+                    <strong>回首页看精选项目</strong>
+                    <span>首页保留简洁入口，适合第一屏后的快速展示。</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>© 2026 JINZ LAB COMPONENT PRACTICE</p>
+        <p><a href="index.html">Home</a> · <a href="projects.html">Projects</a> · <a href="https://github.com/1clipse" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+    </footer>
+
+    <div class="toast" role="status" aria-live="polite"></div>
+    <script src="script.js?v=20260630-mainframe"></script>
+</body>
+</html>
